@@ -14,9 +14,7 @@ setPalette(QPalette(QColor(250, 250, 200)));
 setAutoFillBackground(true);
 setMouseTracking(false);
 
-// *Not needed
-//color=Qt::black;
-//width=3;
+
 
 // erschaffe zeichenfeld, dass dependent auf einen Timer ein update startet!
 timer=new QTimer(this);
@@ -178,8 +176,12 @@ if (hagelKoerner->points.size()>0)
 
 
 
+// DRAW HEALTH
 
-
+// paint 3 empty hearts at all times
+painter.drawEllipse(400,0, 25,18);
+painter.drawEllipse(425,0, 25,18);
+painter.drawEllipse(450,0, 25,18);
 
 if (hearts->points.size()>0)
    {
@@ -195,12 +197,20 @@ if (hearts->points.size()>0)
 
           // wenn pos am ende angelangrt ist, beende for-loop
           if (pos==hearts->points.end()) break;
+
           // ansonsten
                 // erschaffe stift mit der in dem Start-Punkt definierten Farbe und Thickness
           // zeichne hearts
 
           if (*pos !=NULL ) {
-              painter.drawEllipse((*pos)->point.x(),(*pos)->point.y(), 25,18);
+              //if (*letztePos !=NULL ) {painter.drawEllipse((*letztePos)->point.x(),(*letztePos)->point.y(), 25,18)};
+              //cout << (*pos)->point.x() << "  " << (*pos)->point.y() << endl;
+
+              QPainterPath path;
+              path.addEllipse((*pos)->point.x(),(*pos)->point.y(), 25,18);
+
+              painter.fillPath(path, Qt::red);
+              painter.drawPath(path);
 
           }
 
@@ -241,7 +251,21 @@ if (avatar->points.size()>0)
           // zeichne avatar
 
           if (*pos !=NULL ) {
-              painter.drawRect((*pos)->point.x(),475, 25,25);
+
+              painter.drawRect((*pos)->point.x(),(*pos)->point.y(), 25,25);
+
+              //draw inner line of avatar
+              struct myPoint *point;
+              point=new struct myPoint;
+              point->point.setX((*pos)->point.x() + 25);
+              point->point.setY(500);
+              painter.drawLine((*pos)->point , point->point );
+
+
+
+
+
+
 
                int avatarPositionX  = (*pos)->point.x();
                int avatarPositionY  = 475;
@@ -270,7 +294,7 @@ if (avatar->points.size()>0)
                                 break;
                             }
 
-                        if (collisionHappened == true   ) {break; cout<< "BREAK"<< endl;}
+                        if (collisionHappened == true   ) { break; }
 
 
                     }
@@ -290,9 +314,11 @@ if (avatar->points.size()>0)
 
         }
     }else {
+            // create reference-point of avatar for the first time
             struct myPoint *point;
             point=new struct myPoint;
             point->point.setX(225);
+            point->point.setY(475);
             avatar->points.push_back(point);
         }
 

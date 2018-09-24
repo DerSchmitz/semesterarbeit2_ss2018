@@ -13,19 +13,6 @@ meinWidget::meinWidget(QWidget *parent)
     quit->setFont(QFont("Times", 18, QFont::Bold));
     connect(quit, SIGNAL(clicked()), qApp, SLOT(quit()));
 
-    // set red button
-                                        // mit text-red
-    QPushButton *redButton = new QPushButton(tr("Rot"));
-    redButton->setFont(QFont("Times", 18, QFont::Bold));
-    // change
-    connect(redButton, SIGNAL(clicked()), this, SLOT(redColor()));
-    QPushButton *greenButton = new QPushButton(tr("Grün"));
-    greenButton->setFont(QFont("Times", 18, QFont::Bold));
-    connect(greenButton, SIGNAL(clicked()), this, SLOT(greenColor()));
-    /*QSlider *slider = new QSlider(Qt::Horizontal,this);
-    slider->setFont(QFont("Times", 18, QFont::Bold));
-    connect(slider, SIGNAL(valueChanged(int)), this, SLOT(setThickness(int)));*/
-
     /* Use additional Buttons for saving!*/
     // erschaffe button objekt
                                         // mit string "Sichern"
